@@ -1,0 +1,18 @@
+{
+  "name": "version2",
+  "version": "2.2.2",
+  "description": "Process monitoring, control and analysis dashboard",
+  "main": "routes.js",
+  "scripts": {
+    "install": "npm install",
+    "live": "pm2 start routes.js --name prod-routes && pm2 start modbus.js --name prod-modbus",
+    "build:css": "tailwind build src/style.css -o html/style.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "modbus-serial": "^8.0.0",
+    "express": "^4.17.1"
+  }
+}
