@@ -10,7 +10,7 @@ var noww = new Date().toLocaleString(undefined, { timeZone: 'Asia/Kolkata' });
 console.log(`[ STARTING: ${noww} ]`)
 var startTime = + new Date();
 
-// Modbus RTU configs
+// Modbus TCP configs
 var client = new ModbusRTU();
 const slaveID = 1;
 
@@ -699,13 +699,17 @@ var payload = {
             precompression: 0,
             maincompression: 0,
             ejection: 0,
-            status: false
+            status: false,
+            dwell: 0
         }
     },
     
-    precompression_avg: 0,
-    maincompression_avg: 0,
-    ejection_avg: 0,
+    precompressionLHS_avg: 0,
+    precompressionRHS_avg: 0,
+    maincompressionLHS_avg: 0,
+    maincompressionRHS_avg: 0,
+    ejectionLHS_avg: 0,
+    ejectionRHS_avg: 0,
 };
 
 // Modbus 'state' constants
@@ -750,7 +754,7 @@ let timetemp = 0;
 // Write Registers
 var tablets_per_hour = 0;
 
-// Make physical connection MODBUS-RTU
+// Make connection
 var connectClient = function () {
 
     // close port (NOTE: important in order not to create multiple connections)
@@ -877,7 +881,7 @@ var runModbus = function () {
     if (nextAction !== undefined) {
         nextAction();
     } else {
-        readpre();
+        readpreLHS();
     }
 
     // set for next run
